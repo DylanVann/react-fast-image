@@ -1,38 +1,20 @@
 import React from 'react'
-import { cssContainerInner, cssContainerOuter, cssAsset } from './styles'
 import classnames from 'classnames'
+import { cssContainerInner, cssContainerOuter, cssAsset } from './styles'
 import { imgTagString } from 'react-img-tag'
+import { FastImageCommonProps } from './FastImage'
+import { getPaddingBottom } from './getPaddingBottom'
 
-export interface FastImageImageProps {
-    /**
-     * Media is sorrounded by two spans for positioning.
-     * This class will be added to the outer span.
-     */
-    containerOuterClassName: string
-    /**
-     * Media is sorrounded by two spans for positioning.
-     * This class will be added to the inner span.
-     */
-    containerInnerClassName: string
-    /**
-     * The css class that will go on the media element (img or video).
-     */
-    mediaClassName: string
-    /**
-     * This class is added after the media is shown for one frame.
-     * It can be used to add css transitions for when the media enters.
-     */
-    mediaVisibleClassName: string
-    lazyLoadMargin: string
-    src: string
-    srcSet: string
-    alt: string
-    title: string
-    sizes: string
+export interface FastImageImageProps extends FastImageCommonProps {
+    src?: string
+    srcSet?: string
+    alt?: string
+    title?: string
+    sizes?: string
 }
 
 export class FastImageImage extends React.PureComponent<FastImageImageProps> {
-    img: HTMLImageElement = new Image()
+    media?: HTMLImageElement
     inner?: HTMLElement
     outer?: HTMLElement
 
@@ -56,48 +38,47 @@ export class FastImageImage extends React.PureComponent<FastImageImageProps> {
     }
 
     onNextFrame = () => {
-        this.img.className = classnames(
-            cssAsset,
-            this.props.mediaClassName,
-            this.props.mediaVisibleClassName,
-        )
+        if (this.media) {
+            this.media.className = classnames(
+                cssAsset,
+                this.props.mediaClassName,
+                this.props.mediaVisibleClassName,
+            )
+        }
     }
 
     onDecode = () => {
-        this.inner && this.inner.appendChild(this.img)
-        requestAnimationFrame(this.onNextFrame)
+        if (this.inner && this.media) {
+            this.inner.appendChild(this.media)
+            requestAnimationFrame(this.onNextFrame)
+        }
     }
 
     onLoad = () => {
-        if ((this.img as any).decode) {
-            ;(this.img as any).decode().then(this.onDecode)
+        if ((this.media as any).decode) {
+            ;(this.media as any).decode().then(this.onDecode)
         } else {
             requestAnimationFrame(this.onDecode)
         }
     }
 
     onVisible = () => {
-        const img = new Image()
-        this.img = img
+        const media = document.createElement('img')
         // We will load the image, then decode it, then add it to the DOM.
         // By doing this we can ensure we will minimize frame drops.
-        img.onload = this.onLoad
+        media.onload = this.onLoad
         // Set props.
-        img.src = this.props.src
-        img.srcset = this.props.srcSet
-        img.alt = this.props.alt
-        img.title = this.props.title
-        img.sizes = this.props.sizes
-        img.className = classnames(cssAsset, this.props.mediaClassName)
+        media.src = this.props.src || ''
+        media.srcset = this.props.srcSet || ''
+        media.alt = this.props.alt || ''
+        media.title = this.props.title || ''
+        media.sizes = this.props.sizes || ''
+        media.className = classnames(cssAsset, this.props.mediaClassName)
+        this.media = media
     }
 
-    captureInnerRef = (ref: HTMLElement) => {
-        this.inner = ref
-    }
-
-    captureOuterRef = (ref: HTMLElement) => {
-        this.intersectionObserver.observe(ref)
-    }
+    captureInnerRef = (ref: HTMLElement) => (this.inner = ref)
+    captureOuterRef = (ref: HTMLElement) => this.intersectionObserver.observe(ref)
 
     render() {
         return (
@@ -107,7 +88,7 @@ export class FastImageImage extends React.PureComponent<FastImageImageProps> {
             >
                 <span
                     className={classnames(cssContainerInner, this.props.containerInnerClassName)}
-                    style={{ paddingBottom: '10px' }}
+                    style={{ paddingBottom: getPaddingBottom(this.props.width, this.props.height) }}
                     ref={this.captureInnerRef}
                 >
                     <noscript dangerouslySetInnerHTML={{ __html: imgTagString(this.props) }} />
