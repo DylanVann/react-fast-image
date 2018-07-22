@@ -1,18 +1,19 @@
 import React from 'react'
 import { cssContainerInner, cssContainerOuter, cssAsset } from './styles'
 import classnames from 'classnames'
+import { imgTagString } from 'react-img-tag'
 
 export interface FastImageImageProps {
     /**
      * Media is sorrounded by two spans for positioning.
      * This class will be added to the outer span.
      */
-    outerContainerClassName: string
+    containerOuterClassName: string
     /**
      * Media is sorrounded by two spans for positioning.
      * This class will be added to the inner span.
      */
-    innerContainerClassName: string
+    containerInnerClassName: string
     /**
      * The css class that will go on the media element (img or video).
      */
@@ -100,12 +101,17 @@ export class FastImageImage extends React.PureComponent<FastImageImageProps> {
 
     render() {
         return (
-            <span className={cssContainerOuter} ref={this.captureOuterRef}>
+            <span
+                className={classnames(cssContainerOuter, this.props.containerOuterClassName)}
+                ref={this.captureOuterRef}
+            >
                 <span
-                    className={cssContainerInner}
+                    className={classnames(cssContainerInner, this.props.containerInnerClassName)}
                     style={{ paddingBottom: '10px' }}
                     ref={this.captureInnerRef}
-                />
+                >
+                    <noscript dangerouslySetInnerHTML={{ __html: imgTagString(this.props) }} />
+                </span>
             </span>
         )
     }
