@@ -11,11 +11,11 @@ const input = 'src/index.ts'
 
 // Peer dependencies.
 // e.g. ['react']
-const external = []
+const external = ['react']
 
 // A mapping of externals to global names for a UMD build.
 // e.g. { react: 'React' }
-const globals = {}
+const globals = { react: 'React' }
 
 const plugins = [
     // Allow json resolution
