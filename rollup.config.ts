@@ -11,7 +11,7 @@ const input = 'src/index.ts'
 
 // Peer dependencies.
 // e.g. ['react']
-const external = ['react']
+const external = ['react', 'emotion']
 
 // A mapping of externals to global names for a UMD build.
 // e.g. { react: 'React' }

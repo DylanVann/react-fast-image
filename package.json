@@ -21,7 +21,7 @@
     },
     "license": "MIT",
     "scripts": {
-        "lint": "tslint -p . -t codeFrame '**/*.{js,jsx,ts,tsx}'",
+        "lint": "tslint -p . -t codeFrame 'src/**/*.{js,jsx,ts,tsx}'",
         "format": "prettier --write '**/*.{js,jsx,ts,tsx,md,json,css,html}'",
         "prebuild": "rimraf dist",
         "build": "tsc --module commonjs && rollup -c rollup.config.ts",
@@ -88,8 +88,10 @@
         "tabWidth": 4
     },
     "devDependencies": {
+        "@types/classnames": "^2.2.6",
         "@types/jest": "^23.3.0",
         "@types/node": "^10.0.3",
+        "@types/react": "^16.4.6",
         "commitizen": "^2.9.6",
         "cz-conventional-changelog": "^2.0.0",
         "husky": "^0.14.0",
@@ -115,10 +117,12 @@
         "validate-commit-msg": "^2.12.2"
     },
     "dependencies": {
+        "classnames": "^2.2.6",
         "react-img-tag": "^0.0.2",
         "react-video-tag": "^0.0.10"
     },
     "peerDependencies": {
+        "emotion": "^9.2.6",
         "react": "^16.4.1"
     }
 }
