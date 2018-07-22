@@ -14,8 +14,7 @@ If this goes well I might merge the projects.
     -   Uses `img.decode()` when creating the element if available.
     -   I've seen other modules using this API incorrectly. You need to call it and wait for it before adding the `img` to the DOM or there's not an advantage to using it.
 -   Supports HTML5 video GIFS.
--   Works for users with JS disabled when SSR is used.
-    -   This will also render a `<noscript>` tag.
+-   Works for users with JS disabled when SSR is used by rendering the image inside `<noscript>`.
 
 ### Async Decoding
 
