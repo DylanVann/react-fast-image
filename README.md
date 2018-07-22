@@ -12,6 +12,9 @@ If this goes well I might merge the projects.
 - Async decoding:
     - Uses `decoding=async` on the element.
     - Uses `img.decode()` when creating the element if available.
+- Supports HTML5 video GIFS.
+- Works for users with JS disabled when SSR is used.
+    - This will also render a `<noscript>` tag.
 
 ### Async Decoding
 
