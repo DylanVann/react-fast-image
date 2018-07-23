@@ -79,7 +79,7 @@ export class FastImageImage extends React.PureComponent<FastImageImageProps> {
     captureInnerRef = (ref: HTMLElement) => (this.inner = ref)
     captureOuterRef = (ref: HTMLElement) => {
         this.outer = ref
-        this.intersectionObserver.observe(ref)
+        addObserver(ref, 100, this.onVisible)
     }
 
     render() {
