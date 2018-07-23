@@ -47,6 +47,9 @@ export class FastImageImage extends React.PureComponent<FastImageImageProps> {
         if (this.inner && this.media) {
             this.inner.appendChild(this.media)
             setTimeout(this.onNextFrame, 32)
+            if (this.props.onAddedToDOM) {
+                this.props.onAddedToDOM()
+            }
         }
     }
 

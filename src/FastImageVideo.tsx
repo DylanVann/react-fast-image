@@ -48,6 +48,9 @@ export class FastImageVideo extends React.PureComponent<FastImageVideoProps> {
         if (this.inner && this.media) {
             this.inner.appendChild(this.media)
             requestAnimationFrame(this.onNextFrame)
+            if (this.props.onAddedToDOM) {
+                this.props.onAddedToDOM()
+            }
         }
     }
 

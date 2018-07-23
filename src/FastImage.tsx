@@ -35,6 +35,8 @@ export interface FastImageCommonProps {
      * The original height of the media.
      */
     height?: number
+    onLoad?: Function
+    onAddedToDOM?: Function
 }
 
 export interface FastImageProps extends FastImageCommonProps {
@@ -55,33 +57,29 @@ const defaultProps = {
 export class FastImage extends React.PureComponent<FastImageProps> {
     static defaultProps: FastImageProps = defaultProps
     render() {
+        const {
+            imgSrc,
+            imgSrcSet,
+            videoSrc,
+            videoPosterSrc,
+            videoPosterSrcSet,
+            ...otherProps
+        } = this.props
         if (this.props.imgSrc) {
             return (
                 <FastImageImage
-                    src={this.props.imgSrc}
-                    srcSet={this.props.imgSrcSet}
-                    width={this.props.width}
-                    height={this.props.height}
-                    containerOuterClassName={this.props.containerOuterClassName}
-                    containerInnerClassName={this.props.containerInnerClassName}
-                    mediaClassName={this.props.mediaClassName}
-                    mediaVisibleClassName={this.props.mediaVisibleClassName}
-                    lazyLoadMargin={this.props.lazyLoadMargin}
+                    src={imgSrc}
+                    srcSet={imgSrcSet}
+                    {...otherProps}
                 />
             )
         }
         return (
             <FastImageVideo
-                src={this.props.videoSrc}
-                videoPoster={this.props.videoPosterSrc}
-                videoPosterSrcSet={this.props.videoPosterSrcSet}
-                width={this.props.width}
-                height={this.props.height}
-                containerOuterClassName={this.props.containerOuterClassName}
-                containerInnerClassName={this.props.containerInnerClassName}
-                mediaClassName={this.props.mediaClassName}
-                mediaVisibleClassName={this.props.mediaVisibleClassName}
-                lazyLoadMargin={this.props.lazyLoadMargin}
+                src={videoSrc}
+                videoPoster={videoPosterSrc}
+                videoPosterSrcSet={videoPosterSrcSet}
+                {...otherProps}
             />
         )
     }
