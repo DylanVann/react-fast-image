@@ -14,8 +14,20 @@ export class FastImageVideo extends React.PureComponent<FastImageVideoProps> {
     media?: HTMLVideoElement
     inner?: HTMLElement
     outer?: HTMLElement
+    intersectionObserver?: IntersectionObserver
+
+    constructor(props: FastImageVideoProps) {
+        super(props)
+        if (typeof window === 'undefined') return
+        if ((window as any).IntersectionObserver) {
+            this.intersectionObserver = new IntersectionObserver(this.onIntersection, {
+                rootMargin: props.lazyLoadMargin,
+            })
+        }
+    }
 
     onIntersection = (entries: IntersectionObserverEntry[]) => {
+        if (!this.intersectionObserver) return
         const entry = entries[0] || {}
         // Edge doesn't currently support isIntersecting, so also test for an intersectionRatio > 0
         if (entry.isIntersecting || entry.intersectionRatio > 0) {
@@ -24,11 +36,8 @@ export class FastImageVideo extends React.PureComponent<FastImageVideoProps> {
         }
     }
 
-    intersectionObserver = new IntersectionObserver(this.onIntersection, {
-        rootMargin: this.props.lazyLoadMargin,
-    })
-
     componentWillUnmount() {
+        if (!this.intersectionObserver) return
         if (this.outer) {
             this.intersectionObserver.unobserve(this.outer)
         }
@@ -71,8 +80,11 @@ export class FastImageVideo extends React.PureComponent<FastImageVideoProps> {
 
     captureInnerRef = (ref: HTMLElement) => (this.inner = ref)
     captureOuterRef = (ref: HTMLElement) => {
+        if (ref) {
+            // addObserver(ref, 100, this.onVisible)
+            this.onVisible()
+        }
         this.outer = ref
-        this.intersectionObserver.observe(ref)
     }
 
     render() {

@@ -16,8 +16,20 @@ export class FastImageImage extends React.PureComponent<FastImageImageProps> {
     media?: HTMLImageElement
     inner?: HTMLElement
     outer?: HTMLElement
+    intersectionObserver?: IntersectionObserver
+
+    constructor(props: FastImageImageProps) {
+        super(props)
+        if (typeof window === 'undefined') return
+        if ((window as any).IntersectionObserver) {
+            this.intersectionObserver = new IntersectionObserver(this.onIntersection, {
+                rootMargin: props.lazyLoadMargin,
+            })
+        }
+    }
 
     onIntersection = (entries: IntersectionObserverEntry[]) => {
+        if (!this.intersectionObserver) return
         const entry = entries[0] || {}
         // Edge doesn't currently support isIntersecting, so also test for an intersectionRatio > 0
         if (entry.isIntersecting || entry.intersectionRatio > 0) {
@@ -26,16 +38,12 @@ export class FastImageImage extends React.PureComponent<FastImageImageProps> {
         }
     }
 
-    intersectionObserver = new IntersectionObserver(this.onIntersection, {
-        rootMargin: this.props.lazyLoadMargin,
-    })
-
     componentDidMount() {
         console.log('mount')
     }
 
     componentWillUnmount() {
-        console.log('unmount')
+        if (!this.intersectionObserver) return
         if (this.outer) {
             this.intersectionObserver.unobserve(this.outer)
         }
@@ -83,9 +91,10 @@ export class FastImageImage extends React.PureComponent<FastImageImageProps> {
     captureInnerRef = (ref: HTMLElement) => (this.inner = ref)
     captureOuterRef = (ref: HTMLElement) => {
         if (ref) {
-            this.outer = ref
-            this.intersectionObserver.observe(ref)
+            // addObserver(ref, 100, this.onVisible)
+            this.onVisible()
         }
+        this.outer = ref
     }
 
     render() {
