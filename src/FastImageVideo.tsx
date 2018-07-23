@@ -2,6 +2,7 @@ import React from 'react'
 import classnames from 'classnames'
 import { cssContainerInner, cssContainerOuter, cssAsset } from './styles'
 import { FastImageCommonProps } from './FastImage'
+import { videoTagString } from 'react-video-tag'
 import { getPaddingBottom } from './getPaddingBottom'
 
 export interface FastImageVideoProps extends FastImageCommonProps {
@@ -54,7 +55,7 @@ export class FastImageVideo extends React.PureComponent<FastImageVideoProps> {
         }
     }
 
-    onLoad = () => {
+    onCanPlay = () => {
         if (this.inner && this.media) {
             this.inner.appendChild(this.media)
             requestAnimationFrame(this.onNextFrame)
@@ -65,17 +66,14 @@ export class FastImageVideo extends React.PureComponent<FastImageVideoProps> {
     }
 
     onVisible = () => {
-        const media = document.createElement('video')
-        media.oncanplay = this.onLoad
-        // We will load the image, then decode it, then add it to the DOM.
-        // By doing this we can ensure we will minimize frame drops.
-        // Set props.
+        const media: any = document.createElement('video')
+        media.oncanplay = this.onCanPlay
         media.src = this.props.src || ''
         media.className = classnames(cssAsset, this.props.mediaClassName)
-        media.setAttribute('muted', '')
-        media.setAttribute('autoplay', '')
-        media.setAttribute('playsinline', '')
-        media.setAttribute('loop', '')
+        media.playsinline = true
+        media.muted = true
+        media.loop = true
+        media.autoplay = true
         this.media = media
     }
 
@@ -97,7 +95,26 @@ export class FastImageVideo extends React.PureComponent<FastImageVideoProps> {
                     className={classnames(cssContainerInner, this.props.containerInnerClassName)}
                     style={{ paddingBottom: getPaddingBottom(this.props.width, this.props.height) }}
                     ref={this.captureInnerRef}
-                />
+                >
+                    <noscript
+                        style={{
+                            paddingBottom: getPaddingBottom(this.props.width, this.props.height),
+                        }}
+                        dangerouslySetInnerHTML={{
+                            __html: videoTagString({
+                                src: this.props.src,
+                                muted: true,
+                                autoPlay: true,
+                                playsInline: true,
+                                loop: true,
+                                className: classnames(
+                                    cssContainerInner,
+                                    this.props.containerInnerClassName,
+                                ),
+                            }),
+                        }}
+                    />
+                </span>
             </span>
         )
     }
