@@ -51,7 +51,7 @@ export interface FastImageProps extends FastImageCommonProps {
 }
 
 const defaultProps = {
-    lazyLoadMargin: '100px',
+    lazyLoadMargin: '500px',
 }
 
 export class FastImage extends React.PureComponent<FastImageProps> {
