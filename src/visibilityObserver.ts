@@ -12,7 +12,7 @@ const visibilityObserverMap: {
     [key: string]: ObserverWithListeners
 } = {}
 
-const addObserver = (el: HTMLElement, margin: number, cb: Function) => {
+export const addObserver = (el: HTMLElement, margin: number, cb: Function) => {
     if (typeof window === `undefined`) return
     if (!IntersectionObserver) return
 

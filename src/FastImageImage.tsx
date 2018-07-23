@@ -3,6 +3,7 @@ import classnames from 'classnames'
 import { cssContainerInner, cssContainerOuter, cssAsset } from './styles'
 import { FastImageCommonProps } from './FastImage'
 import { getPaddingBottom } from './getPaddingBottom'
+import { addObserver } from './visibilityObserver'
 
 export interface FastImageImageProps extends FastImageCommonProps {
     src?: string
