@@ -1,7 +1,6 @@
 import React from 'react'
 import classnames from 'classnames'
 import { cssContainerInner, cssContainerOuter, cssAsset } from './styles'
-import { videoTagString } from 'react-video-tag'
 import { FastImageCommonProps } from './FastImage'
 import { getPaddingBottom } from './getPaddingBottom'
 
@@ -71,15 +70,6 @@ export class FastImageVideo extends React.PureComponent<FastImageVideoProps> {
     captureOuterRef = (ref: HTMLElement) => this.intersectionObserver.observe(ref)
 
     render() {
-        const { src } = this.props
-        const videoHTML = videoTagString({
-            className: classnames(cssAsset, this.props.mediaClassName),
-            src,
-            muted: true,
-            autoPlay: true,
-            playsInline: true,
-            loop: true,
-        })
         return (
             <span
                 className={classnames(cssContainerOuter, this.props.containerOuterClassName)}
@@ -89,13 +79,7 @@ export class FastImageVideo extends React.PureComponent<FastImageVideoProps> {
                     className={classnames(cssContainerInner, this.props.containerInnerClassName)}
                     style={{ paddingBottom: getPaddingBottom(this.props.width, this.props.height) }}
                     ref={this.captureInnerRef}
-                >
-                    <noscript
-                        dangerouslySetInnerHTML={{
-                            __html: videoHTML,
-                        }}
-                    />
-                </span>
+                />
             </span>
         )
     }

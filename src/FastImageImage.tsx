@@ -90,9 +90,7 @@ export class FastImageImage extends React.PureComponent<FastImageImageProps> {
                     className={classnames(cssContainerInner, this.props.containerInnerClassName)}
                     style={{ paddingBottom: getPaddingBottom(this.props.width, this.props.height) }}
                     ref={this.captureInnerRef}
-                >
-                    <noscript dangerouslySetInnerHTML={{ __html: imgTagString(this.props) }} />
-                </span>
+                />
             </span>
         )
     }
