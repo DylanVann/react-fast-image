@@ -3,7 +3,6 @@ import classnames from 'classnames'
 import { cssContainerInner, cssContainerOuter, cssAsset } from './styles'
 import { FastImageCommonProps } from './FastImage'
 import { getPaddingBottom } from './getPaddingBottom'
-import { addObserver } from './visibilityObserver'
 
 export interface FastImageImageProps extends FastImageCommonProps {
     src?: string
@@ -31,7 +30,12 @@ export class FastImageImage extends React.PureComponent<FastImageImageProps> {
         rootMargin: this.props.lazyLoadMargin,
     })
 
+    componentDidMount() {
+        console.log('mount')
+    }
+
     componentWillUnmount() {
+        console.log('unmount')
         if (this.outer) {
             this.intersectionObserver.unobserve(this.outer)
         }
@@ -46,7 +50,7 @@ export class FastImageImage extends React.PureComponent<FastImageImageProps> {
     onDecode = () => {
         if (this.inner && this.media) {
             this.inner.appendChild(this.media)
-            setTimeout(this.onNextFrame, 32)
+            setTimeout(this.onNextFrame, 0)
             if (this.props.onAddedToDOM) {
                 this.props.onAddedToDOM()
             }
@@ -57,7 +61,7 @@ export class FastImageImage extends React.PureComponent<FastImageImageProps> {
         if ((this.media as any).decode) {
             ;(this.media as any).decode().then(this.onDecode)
         } else {
-            requestAnimationFrame(this.onDecode)
+            setTimeout(this.onDecode)
         }
     }
 
@@ -78,8 +82,10 @@ export class FastImageImage extends React.PureComponent<FastImageImageProps> {
 
     captureInnerRef = (ref: HTMLElement) => (this.inner = ref)
     captureOuterRef = (ref: HTMLElement) => {
-        this.outer = ref
-        addObserver(ref, 100, this.onVisible)
+        if (ref) {
+            this.outer = ref
+            this.intersectionObserver.observe(ref)
+        }
     }
 
     render() {

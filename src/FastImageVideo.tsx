@@ -70,7 +70,10 @@ export class FastImageVideo extends React.PureComponent<FastImageVideoProps> {
     }
 
     captureInnerRef = (ref: HTMLElement) => (this.inner = ref)
-    captureOuterRef = (ref: HTMLElement) => this.intersectionObserver.observe(ref)
+    captureOuterRef = (ref: HTMLElement) => {
+        this.outer = ref
+        this.intersectionObserver.observe(ref)
+    }
 
     render() {
         return (
