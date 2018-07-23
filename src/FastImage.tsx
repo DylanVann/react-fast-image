@@ -7,48 +7,53 @@ export interface FastImageCommonProps {
      * Media is sorrounded by two spans for positioning.
      * This class will be added to the outer span.
      */
-    containerOuterClassName: string
+    containerOuterClassName?: string
     /**
      * Media is sorrounded by two spans for positioning.
      * This class will be added to the inner span.
      */
-    containerInnerClassName: string
+    containerInnerClassName?: string
     /**
      * The css class that will go on the media element (img or video).
      */
-    mediaClassName: string
+    mediaClassName?: string
     /**
      * This class is added after the media is shown for one frame.
      * It can be used to add css transitions for when the media enters.
      */
-    mediaVisibleClassName: string
+    mediaVisibleClassName?: string
     /**
      * Determines when the media will be loaded.
      * e.g. 200px
      */
-    lazyLoadMargin: string
+    lazyLoadMargin?: string
     /**
      * The original width of the media.
      */
-    width: number
+    width?: number
     /**
      * The original height of the media.
      */
-    height: number
+    height?: number
 }
 
 export interface FastImageProps extends FastImageCommonProps {
     // img
-    imgSrc: string
-    imgSrcSet: string
+    imgSrc?: string
+    imgSrcSet?: string
     // video
-    videoSrc: string
+    videoSrc?: string
     // videoPoster
-    videoPosterSrc: string
-    videoPosterSrcSet: string
+    videoPosterSrc?: string
+    videoPosterSrcSet?: string
+}
+
+const defaultProps = {
+    lazyLoadMargin: '100px',
 }
 
 export class FastImage extends React.PureComponent<FastImageProps> {
+    defaultProps: FastImageProps = defaultProps
     render() {
         if (this.props.imgSrc) {
             return (

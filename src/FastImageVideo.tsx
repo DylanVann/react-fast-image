@@ -5,9 +5,9 @@ import { FastImageCommonProps } from './FastImage'
 import { getPaddingBottom } from './getPaddingBottom'
 
 export interface FastImageVideoProps extends FastImageCommonProps {
-    src: string
-    videoPoster: string
-    videoPosterSrcSet: string
+    src?: string
+    videoPoster?: string
+    videoPosterSrcSet?: string
 }
 
 export class FastImageVideo extends React.PureComponent<FastImageVideoProps> {
