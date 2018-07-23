@@ -50,7 +50,7 @@ export class FastImageImage extends React.PureComponent<FastImageImageProps> {
     onDecode = () => {
         if (this.inner && this.media) {
             this.inner.appendChild(this.media)
-            requestAnimationFrame(this.onNextFrame)
+            setTimeout(this.onNextFrame, 32)
         }
     }
 
