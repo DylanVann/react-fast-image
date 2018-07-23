@@ -1,7 +1,6 @@
 import React from 'react'
 import classnames from 'classnames'
 import { cssContainerInner, cssContainerOuter, cssAsset } from './styles'
-import { imgTagString } from 'react-img-tag'
 import { FastImageCommonProps } from './FastImage'
 import { getPaddingBottom } from './getPaddingBottom'
 
