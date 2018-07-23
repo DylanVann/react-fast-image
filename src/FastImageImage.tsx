@@ -38,10 +38,6 @@ export class FastImageImage extends React.PureComponent<FastImageImageProps> {
         }
     }
 
-    componentDidMount() {
-        console.log('mount')
-    }
-
     componentWillUnmount() {
         if (!this.intersectionObserver) return
         if (this.outer) {
