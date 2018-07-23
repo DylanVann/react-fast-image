@@ -20,6 +20,7 @@ export class FastImageImage extends React.PureComponent<FastImageImageProps> {
 
     constructor(props: FastImageImageProps) {
         super(props)
+        // tslint:disable-next-line
         if (typeof window === 'undefined') return
         if ((window as any).IntersectionObserver) {
             this.intersectionObserver = new IntersectionObserver(this.onIntersection, {
@@ -54,7 +55,7 @@ export class FastImageImage extends React.PureComponent<FastImageImageProps> {
     onDecode = () => {
         if (this.inner && this.media) {
             this.inner.appendChild(this.media)
-            setTimeout(this.onNextFrame, 0)
+            setTimeout(this.onNextFrame, 32)
             if (this.props.onAddedToDOM) {
                 this.props.onAddedToDOM()
             }
@@ -86,9 +87,8 @@ export class FastImageImage extends React.PureComponent<FastImageImageProps> {
 
     captureInnerRef = (ref: HTMLElement) => (this.inner = ref)
     captureOuterRef = (ref: HTMLElement) => {
-        if (ref) {
-            // addObserver(ref, 100, this.onVisible)
-            this.onVisible()
+        if (ref && this.intersectionObserver) {
+            this.intersectionObserver.observe(ref)
         }
         this.outer = ref
     }

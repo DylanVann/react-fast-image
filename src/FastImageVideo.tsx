@@ -18,6 +18,7 @@ export class FastImageVideo extends React.PureComponent<FastImageVideoProps> {
 
     constructor(props: FastImageVideoProps) {
         super(props)
+        // tslint:disable-next-line
         if (typeof window === 'undefined') return
         if ((window as any).IntersectionObserver) {
             this.intersectionObserver = new IntersectionObserver(this.onIntersection, {
@@ -80,9 +81,8 @@ export class FastImageVideo extends React.PureComponent<FastImageVideoProps> {
 
     captureInnerRef = (ref: HTMLElement) => (this.inner = ref)
     captureOuterRef = (ref: HTMLElement) => {
-        if (ref) {
-            // addObserver(ref, 100, this.onVisible)
-            this.onVisible()
+        if (ref && this.intersectionObserver) {
+            this.intersectionObserver.observe(ref)
         }
         this.outer = ref
     }

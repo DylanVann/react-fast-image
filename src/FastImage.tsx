@@ -66,13 +66,7 @@ export class FastImage extends React.PureComponent<FastImageProps> {
             ...otherProps
         } = this.props
         if (this.props.imgSrc) {
-            return (
-                <FastImageImage
-                    src={imgSrc}
-                    srcSet={imgSrcSet}
-                    {...otherProps}
-                />
-            )
+            return <FastImageImage src={imgSrc} srcSet={imgSrcSet} {...otherProps} />
         }
         return (
             <FastImageVideo

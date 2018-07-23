@@ -13,6 +13,7 @@ const visibilityObserverMap: {
 } = {}
 
 export const addObserver = (el: HTMLElement, margin: number, cb: Function) => {
+    // tslint:disable-next-line
     if (typeof window === `undefined`) return
     if (!IntersectionObserver) return
 
