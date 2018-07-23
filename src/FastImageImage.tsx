@@ -38,12 +38,8 @@ export class FastImageImage extends React.PureComponent<FastImageImageProps> {
     }
 
     onNextFrame = () => {
-        if (this.media) {
-            this.media.className = classnames(
-                cssAsset,
-                this.props.mediaClassName,
-                this.props.mediaVisibleClassName,
-            )
+        if (this.media && this.props.mediaVisibleClassName) {
+            this.media.classList.add(this.props.mediaVisibleClassName)
         }
     }
 
