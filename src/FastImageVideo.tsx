@@ -45,36 +45,16 @@ export class FastImageVideo extends React.PureComponent<FastImageVideoProps> {
         }
     }
 
-    onNextFrame = () => {
-        if (this.media) {
-            this.media.className = classnames(
-                cssAsset,
-                this.props.mediaClassName,
-                this.props.mediaVisibleClassName,
-            )
-        }
-    }
-
-    onCanPlay = () => {
-        if (this.inner && this.media) {
-            this.inner.appendChild(this.media)
-            requestAnimationFrame(this.onNextFrame)
-            if (this.props.onAddedToDOM) {
-                this.props.onAddedToDOM()
-            }
-        }
-    }
-
     onVisible = () => {
+        if (!this.inner) return
         const media: any = document.createElement('video')
-        media.oncanplay = this.onCanPlay
-        media.src = this.props.src || ''
         media.className = classnames(cssAsset, this.props.mediaClassName)
-        media.playsinline = true
+        media.src = this.props.src || ''
         media.muted = true
-        media.loop = true
+        media.playsinline = true
         media.autoplay = true
-        this.media = media
+        media.loop = true
+        this.inner.appendChild(media)
     }
 
     captureInnerRef = (ref: HTMLElement) => (this.inner = ref)

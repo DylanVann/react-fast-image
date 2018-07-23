@@ -11,7 +11,6 @@ If this goes well I might merge the projects.
 -   Lazy loading.
 -   Async decoding.
     -   Uses `img.decode()` to decode images before adding them to the DOM.
-    -   Uses `video.oncanplay` to decode videos before adding them to the DOM.
 -   Supports HTML5 video GIFS.
 -   Works for users with JS disabled when SSR is used by rendering the media inside `<noscript>`.
 
