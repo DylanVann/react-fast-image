@@ -53,7 +53,7 @@ const defaultProps = {
 }
 
 export class FastImage extends React.PureComponent<FastImageProps> {
-    defaultProps: FastImageProps = defaultProps
+    static defaultProps: FastImageProps = defaultProps
     render() {
         if (this.props.imgSrc) {
             return (
