@@ -3,6 +3,7 @@ import { FastImageImage } from './FastImageImage'
 import { FastImageVideo } from './FastImageVideo'
 
 export interface FastImageCommonProps {
+    className?: string
     /**
      * Media is sorrounded by two spans for positioning.
      * This class will be added to the outer span.

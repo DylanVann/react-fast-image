@@ -68,7 +68,11 @@ export class FastImageVideo extends React.PureComponent<FastImageVideoProps> {
     render() {
         return (
             <span
-                className={classnames(cssContainerOuter, this.props.containerOuterClassName)}
+                className={classnames(
+                    cssContainerOuter,
+                    this.props.containerOuterClassName,
+                    this.props.className,
+                )}
                 ref={this.captureOuterRef}
             >
                 <span
