@@ -50,10 +50,19 @@ export class FastImageVideo extends React.PureComponent<FastImageVideoProps> {
         const media: any = document.createElement('video')
         media.className = classnames(cssAsset, this.props.mediaClassName)
         media.src = this.props.src || ''
+
         media.muted = true
+        media.setAttribute('muted', '')
+
         media.playsinline = true
+        media.setAttribute('playsinline', '')
+
         media.autoplay = true
+        media.setAttribute('autoplay', '')
+
         media.loop = true
+        media.setAttribute('loop', '')
+
         this.inner.appendChild(media)
     }
 
