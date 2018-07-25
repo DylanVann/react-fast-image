@@ -28,6 +28,7 @@ export interface FastImageCommonProps {
      * e.g. 200px
      */
     lazyLoadMargin?: string
+    lazy?: boolean
     /**
      * The original width of the media.
      */

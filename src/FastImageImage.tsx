@@ -106,8 +106,19 @@ export class FastImageImage extends React.PureComponent<FastImageImageProps> {
                 <span
                     className={classnames(cssContainerInner, this.props.containerInnerClassName)}
                     style={{ paddingBottom: getPaddingBottom(this.props.width, this.props.height) }}
-                    ref={this.captureInnerRef}
-                />
+                    ref={this.props.lazy ? this.captureInnerRef : undefined}
+                >
+                    {!this.props.lazy && (
+                        <img
+                            src={this.props.src}
+                            srcSet={this.props.srcSet}
+                            alt={this.props.alt}
+                            title={this.props.title}
+                            sizes={this.props.sizes}
+                            className={classnames(cssAsset, this.props.mediaClassName)}
+                        />
+                    )}
+                </span>
             </span>
         )
     }
