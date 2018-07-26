@@ -49,7 +49,7 @@ export default [
         ...commonOptions,
         output: {
             name: camelCase(pkg.name),
-            file: pkg.browser,
+            file: 'dist/index.umd.js',
             globals,
             format: 'umd',
             sourcemap: true,
