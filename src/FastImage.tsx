@@ -48,6 +48,9 @@ export interface FastImageProps extends FastImageCommonProps {
     // img
     imgSrc?: string
     imgSrcSet?: string
+    // img webp
+    imgWebPSrc?: string
+    imgWebPSrcSet?: string
     // video
     videoSrc?: string
     // videoPoster
@@ -66,13 +69,23 @@ export class FastImage extends React.PureComponent<FastImageProps> {
         const {
             imgSrc,
             imgSrcSet,
+            imgWebPSrc,
+            imgWebPSrcSet,
             videoSrc,
             videoPosterSrc,
             videoPosterSrcSet,
             ...otherProps
         } = this.props
         if (this.props.imgSrc) {
-            return <FastImageImage src={imgSrc} srcSet={imgSrcSet} {...otherProps} />
+            return (
+                <FastImageImage
+                    src={imgSrc}
+                    srcSet={imgSrcSet}
+                    srcWebP={imgWebPSrc}
+                    srcSetWebP={imgWebPSrcSet}
+                    {...otherProps}
+                />
+            )
         }
         return (
             <FastImageVideo

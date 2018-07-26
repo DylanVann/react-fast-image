@@ -5,10 +5,13 @@ import { FastImageCommonProps } from './FastImage'
 import { getPaddingBottom } from './getPaddingBottom'
 import { imgTagString } from 'react-img-tag'
 import { noscript } from './noscript'
+import supportsWebP from './supportsWebP'
 
 export interface FastImageImageProps extends FastImageCommonProps {
     src?: string
     srcSet?: string
+    srcWebP?: string
+    srcSetWebP?: string
     alt?: string
     title?: string
     sizes?: string
@@ -78,8 +81,13 @@ export class FastImageImage extends React.PureComponent<FastImageImageProps> {
         // By doing this we can ensure we will minimize frame drops.
         media.onload = this.onLoad
         // Set props.
-        media.src = this.props.src || ''
-        media.srcset = this.props.srcSet || ''
+        if (supportsWebP) {
+            media.src = this.props.srcWebP || this.props.src || ''
+            media.srcset = this.props.srcSetWebP || this.props.srcSet || ''
+        } else {
+            media.src = this.props.src || ''
+            media.srcset = this.props.srcSet || ''
+        }
         media.alt = this.props.alt || ''
         media.title = this.props.title || ''
         media.sizes = this.props.sizes || ''
