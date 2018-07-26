@@ -1,4 +1,5 @@
 // https://github.com/bfred-it/supports-webp
+// tslint:disable-next-line
 const canvas: any = typeof document === 'object' ? document.createElement('canvas') : {}
 canvas.width = canvas.height = 1
 const supportsWebP: boolean = canvas.toDataURL

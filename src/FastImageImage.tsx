@@ -105,8 +105,8 @@ export class FastImageImage extends React.PureComponent<FastImageImageProps> {
 
     render() {
         const imgHtml = imgTagString({
-            src: this.props.src,
-            srcSet: this.props.srcSet,
+            src: supportsWebP ? this.props.srcWebP || this.props.src : this.props.src,
+            srcSet: supportsWebP ? this.props.srcSetWebP || this.props.srcSet : this.props.srcSet,
             alt: this.props.alt,
             title: this.props.title,
             sizes: this.props.sizes,
