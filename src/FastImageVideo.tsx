@@ -4,6 +4,7 @@ import { cssContainerInner, cssContainerOuter, cssAsset } from './styles'
 import { FastImageCommonProps } from './FastImage'
 import { videoTagString } from 'react-video-tag'
 import { getPaddingBottom } from './getPaddingBottom'
+import { noscript } from './noscript'
 
 export interface FastImageVideoProps extends FastImageCommonProps {
     src?: string
@@ -75,6 +76,15 @@ export class FastImageVideo extends React.PureComponent<FastImageVideoProps> {
     }
 
     render() {
+        const videoHtml = videoTagString({
+            src: this.props.src,
+            muted: true,
+            autoPlay: true,
+            playsInline: true,
+            loop: true,
+            className: classnames(cssAsset, this.props.mediaClassName),
+        })
+        const html = this.props.lazy ? noscript(videoHtml) : videoHtml
         return (
             <span
                 className={classnames(
@@ -88,20 +98,7 @@ export class FastImageVideo extends React.PureComponent<FastImageVideoProps> {
                     className={classnames(cssContainerInner, this.props.containerInnerClassName)}
                     style={{ paddingBottom: getPaddingBottom(this.props.width, this.props.height) }}
                     ref={this.props.lazy ? this.captureInnerRef : undefined}
-                    dangerouslySetInnerHTML={
-                        this.props.lazy
-                            ? undefined
-                            : {
-                                  __html: videoTagString({
-                                      src: this.props.src,
-                                      muted: true,
-                                      autoPlay: true,
-                                      playsInline: true,
-                                      loop: true,
-                                      className: classnames(cssAsset, this.props.mediaClassName),
-                                  }),
-                              }
-                    }
+                    dangerouslySetInnerHTML={{ __html: html }}
                 />
             </span>
         )

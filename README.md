@@ -12,7 +12,10 @@ If this goes well I might merge the projects.
 -   Async decoding.
     -   Uses `img.decode()` to decode images before adding them to the DOM.
 -   Supports HTML5 video GIFS.
--   Works for users with JS disabled when SSR is used by rendering the media inside `<noscript>`.
+-   Works for users with JS disabled.
+    When SSR is used media is rendered inside `<noscript>`.
+-   Uses padding to reserve space before media is loaded.
+    This reduces UI jank.
 
 ### Async Decoding
 

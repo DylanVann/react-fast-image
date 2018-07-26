@@ -3,6 +3,8 @@ import classnames from 'classnames'
 import { cssContainerInner, cssContainerOuter, cssAsset } from './styles'
 import { FastImageCommonProps } from './FastImage'
 import { getPaddingBottom } from './getPaddingBottom'
+import { imgTagString } from 'react-img-tag'
+import { noscript } from './noscript'
 
 export interface FastImageImageProps extends FastImageCommonProps {
     src?: string
@@ -94,6 +96,15 @@ export class FastImageImage extends React.PureComponent<FastImageImageProps> {
     }
 
     render() {
+        const imgHtml = imgTagString({
+            src: this.props.src,
+            srcSet: this.props.srcSet,
+            alt: this.props.alt,
+            title: this.props.title,
+            sizes: this.props.sizes,
+            className: classnames(cssAsset, this.props.mediaClassName),
+        })
+        const html = this.props.lazy ? noscript(imgHtml) : imgHtml
         return (
             <span
                 className={classnames(
@@ -107,18 +118,8 @@ export class FastImageImage extends React.PureComponent<FastImageImageProps> {
                     className={classnames(cssContainerInner, this.props.containerInnerClassName)}
                     style={{ paddingBottom: getPaddingBottom(this.props.width, this.props.height) }}
                     ref={this.props.lazy ? this.captureInnerRef : undefined}
-                >
-                    {!this.props.lazy && (
-                        <img
-                            src={this.props.src}
-                            srcSet={this.props.srcSet}
-                            alt={this.props.alt}
-                            title={this.props.title}
-                            sizes={this.props.sizes}
-                            className={classnames(cssAsset, this.props.mediaClassName)}
-                        />
-                    )}
-                </span>
+                    dangerouslySetInnerHTML={{ __html: html }}
+                />
             </span>
         )
     }

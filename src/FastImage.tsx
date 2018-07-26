@@ -24,11 +24,14 @@ export interface FastImageCommonProps {
      */
     mediaVisibleClassName?: string
     /**
+     * Wether or not to wait for the image to enter the viewport to load it.
+     */
+    lazy?: boolean
+    /**
      * Determines when the media will be loaded.
      * e.g. 200px
      */
     lazyLoadMargin?: string
-    lazy?: boolean
     /**
      * The original width of the media.
      */
@@ -53,6 +56,7 @@ export interface FastImageProps extends FastImageCommonProps {
 }
 
 const defaultProps = {
+    lazy: true,
     lazyLoadMargin: '500px',
 }
 
