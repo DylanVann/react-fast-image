@@ -31,6 +31,11 @@ Imagine this scenario:
 
 To prevent this FastImage does decoding of images off the main thread on browsers that support it.
 
+## TypeScript
+
+If you're building up props to pass into `FastImage` you can use `FastImageBestProps`, `FastImageImageBestProps`, and `FastImageVideoBestProps`.
+Those types mark all the best practice props as required which will help you make sure you don't forget any of them.
+
 ## Usage
 
 ```bash

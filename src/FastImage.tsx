@@ -35,32 +35,39 @@ export interface FastImageCommonProps {
     /**
      * The original width of the media.
      */
-    width?: number
+    width: number
     /**
      * The original height of the media.
      */
-    height?: number
+    height: number
     onLoad?: Function
     onAddedToDOM?: Function
 }
 
-export interface FastImageProps extends FastImageCommonProps {
+export interface FastImageImageBestProps extends FastImageCommonProps {
     // img
-    imgAlt?: string
-    imgSizes?: string
-    imgSrc?: string
-    imgSrcSet?: string
-    imgBase64?: string
+    imgAlt: string
+    imgSizes: string
+    imgSrc: string
+    imgSrcSet: string
+    imgBase64: string
     // img webp
-    imgWebPSrc?: string
-    imgWebPSrcSet?: string
-    // video
-    videoSrc?: string
-    // videoPoster
-    videoPosterSrc?: string
-    videoPosterWebPSrc?: string
-    videoPosterBase64?: string
+    imgWebPSrc: string
+    imgWebPSrcSet: string
 }
+
+export interface FastImageVideoBestProps extends FastImageCommonProps {
+    // video
+    videoSrc: string
+    // videoPoster
+    videoPosterSrc: string
+    videoPosterWebPSrc: string
+    videoPosterBase64: string
+}
+
+export type FastImageBestProps = FastImageImageBestProps & FastImageVideoBestProps
+
+export type FastImageProps = Partial<FastImageBestProps>
 
 const defaultProps = {
     lazy: true,
@@ -68,7 +75,7 @@ const defaultProps = {
 }
 
 export class FastImage extends React.PureComponent<FastImageProps> {
-    static defaultProps: FastImageProps = defaultProps
+    static defaultProps: FastImageProps = defaultProps as FastImageProps
     render() {
         const {
             imgAlt,

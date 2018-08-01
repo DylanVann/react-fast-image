@@ -17,7 +17,7 @@ export interface FastImageImageProps extends FastImageCommonProps {
     sizes: string
 }
 
-export class FastImageImage extends React.PureComponent<FastImageImageProps> {
+export class FastImageImage extends React.PureComponent<Partial<FastImageImageProps>> {
     media?: HTMLImageElement
     inner?: HTMLElement
     outer?: HTMLElement
@@ -76,7 +76,8 @@ export class FastImageImage extends React.PureComponent<FastImageImageProps> {
     }
 
     src = () => (supportsWebP ? this.props.webPSrc || this.props.src : this.props.src) || ''
-    srcSet = () => (supportsWebP ? this.props.webPSrcSet || this.props.srcSet : this.props.srcSet) || ''
+    srcSet = () =>
+        (supportsWebP ? this.props.webPSrcSet || this.props.srcSet : this.props.srcSet) || ''
 
     onVisible = () => {
         const media = document.createElement('img')

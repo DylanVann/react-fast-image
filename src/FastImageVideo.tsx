@@ -14,7 +14,7 @@ export interface FastImageVideoProps extends FastImageCommonProps {
     posterBase64: string
 }
 
-export class FastImageVideo extends React.PureComponent<FastImageVideoProps> {
+export class FastImageVideo extends React.PureComponent<Partial<FastImageVideoProps>> {
     media?: HTMLVideoElement
     inner?: HTMLElement
     outer?: HTMLElement
@@ -83,7 +83,8 @@ export class FastImageVideo extends React.PureComponent<FastImageVideoProps> {
     }
 
     src = () => this.props.src || ''
-    poster = () => supportsWebP ? this.props.posterWebPSrc || this.props.posterSrc : this.props.posterSrc
+    poster = () =>
+        supportsWebP ? this.props.posterWebPSrc || this.props.posterSrc : this.props.posterSrc
 
     render() {
         const videoHtml = videoTagString({
