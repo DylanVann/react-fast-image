@@ -46,8 +46,11 @@ export interface FastImageCommonProps {
 
 export interface FastImageProps extends FastImageCommonProps {
     // img
+    imgAlt?: string
+    imgSizes?: string
     imgSrc?: string
     imgSrcSet?: string
+    imgBase64?: string
     // img webp
     imgWebPSrc?: string
     imgWebPSrcSet?: string
@@ -55,7 +58,8 @@ export interface FastImageProps extends FastImageCommonProps {
     videoSrc?: string
     // videoPoster
     videoPosterSrc?: string
-    videoPosterSrcSet?: string
+    videoPosterWebPSrc?: string
+    videoPosterBase64?: string
 }
 
 const defaultProps = {
@@ -67,33 +71,45 @@ export class FastImage extends React.PureComponent<FastImageProps> {
     static defaultProps: FastImageProps = defaultProps
     render() {
         const {
+            imgAlt,
+            imgSizes,
             imgSrc,
             imgSrcSet,
             imgWebPSrc,
             imgWebPSrcSet,
+            imgBase64,
             videoSrc,
             videoPosterSrc,
-            videoPosterSrcSet,
+            videoPosterWebPSrc,
+            videoPosterBase64,
             ...otherProps
         } = this.props
         if (this.props.imgSrc) {
             return (
                 <FastImageImage
-                    src={imgSrc}
-                    srcSet={imgSrcSet}
-                    srcWebP={imgWebPSrc}
-                    srcSetWebP={imgWebPSrcSet}
+                    src={imgSrc as string}
+                    srcSet={imgSrcSet as string}
+                    base64={imgBase64 as string}
+                    webPSrc={imgWebPSrc as string}
+                    webPSrcSet={imgWebPSrcSet as string}
+                    alt={imgAlt as string}
+                    sizes={imgSizes as string}
                     {...otherProps}
                 />
             )
         }
-        return (
-            <FastImageVideo
-                src={videoSrc}
-                videoPoster={videoPosterSrc}
-                videoPosterSrcSet={videoPosterSrcSet}
-                {...otherProps}
-            />
-        )
+        if (this.props.videoSrc) {
+            return (
+                <FastImageVideo
+                    src={videoSrc as string}
+                    posterSrc={videoPosterSrc as string}
+                    posterWebPSrc={videoPosterWebPSrc as string}
+                    posterBase64={videoPosterBase64 as string}
+                    {...otherProps}
+                />
+            )
+        }
+        console.error('No src for FastImage.')
+        return null
     }
 }

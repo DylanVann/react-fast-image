@@ -8,13 +8,13 @@ import { noscript } from './noscript'
 import supportsWebP from './supportsWebP'
 
 export interface FastImageImageProps extends FastImageCommonProps {
-    src?: string
-    srcSet?: string
-    srcWebP?: string
-    srcSetWebP?: string
-    alt?: string
-    title?: string
-    sizes?: string
+    alt: string
+    src: string
+    srcSet: string
+    base64: string
+    webPSrc: string
+    webPSrcSet: string
+    sizes: string
 }
 
 export class FastImageImage extends React.PureComponent<FastImageImageProps> {
@@ -75,21 +75,18 @@ export class FastImageImage extends React.PureComponent<FastImageImageProps> {
         }
     }
 
+    src = () => (supportsWebP ? this.props.webPSrc || this.props.src : this.props.src) || ''
+    srcSet = () => (supportsWebP ? this.props.webPSrcSet || this.props.srcSet : this.props.srcSet) || ''
+
     onVisible = () => {
         const media = document.createElement('img')
         // We will load the image, then decode it, then add it to the DOM.
         // By doing this we can ensure we will minimize frame drops.
         media.onload = this.onLoad
         // Set props.
-        if (supportsWebP) {
-            media.src = this.props.srcWebP || this.props.src || ''
-            media.srcset = this.props.srcSetWebP || this.props.srcSet || ''
-        } else {
-            media.src = this.props.src || ''
-            media.srcset = this.props.srcSet || ''
-        }
+        media.src = this.src()
+        media.srcset = this.srcSet()
         media.alt = this.props.alt || ''
-        media.title = this.props.title || ''
         media.sizes = this.props.sizes || ''
         media.className = classnames(cssAsset, this.props.mediaClassName)
         this.media = media
@@ -105,10 +102,9 @@ export class FastImageImage extends React.PureComponent<FastImageImageProps> {
 
     render() {
         const imgHtml = imgTagString({
-            src: supportsWebP ? this.props.srcWebP || this.props.src : this.props.src,
-            srcSet: supportsWebP ? this.props.srcSetWebP || this.props.srcSet : this.props.srcSet,
+            src: this.src(),
+            srcSet: this.srcSet(),
             alt: this.props.alt,
-            title: this.props.title,
             sizes: this.props.sizes,
             className: classnames(cssAsset, this.props.mediaClassName),
         })

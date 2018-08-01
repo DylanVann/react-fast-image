@@ -5,11 +5,13 @@ import { FastImageCommonProps } from './FastImage'
 import { videoTagString } from 'react-video-tag'
 import { getPaddingBottom } from './getPaddingBottom'
 import { noscript } from './noscript'
+import supportsWebP from './supportsWebP'
 
 export interface FastImageVideoProps extends FastImageCommonProps {
-    src?: string
-    videoPoster?: string
-    videoPosterSrcSet?: string
+    src: string
+    posterSrc: string
+    posterWebPSrc: string
+    posterBase64: string
 }
 
 export class FastImageVideo extends React.PureComponent<FastImageVideoProps> {
@@ -50,7 +52,12 @@ export class FastImageVideo extends React.PureComponent<FastImageVideoProps> {
         if (!this.inner) return
         const media: any = document.createElement('video')
         media.className = classnames(cssAsset, this.props.mediaClassName)
-        media.src = this.props.src || ''
+
+        media.src = this.src()
+        media.setAttribute('src', this.src())
+
+        media.poster = this.poster()
+        media.setAttribute('poster', this.poster())
 
         media.muted = true
         media.setAttribute('muted', '')
@@ -75,9 +82,13 @@ export class FastImageVideo extends React.PureComponent<FastImageVideoProps> {
         this.outer = ref
     }
 
+    src = () => this.props.src || ''
+    poster = () => supportsWebP ? this.props.posterWebPSrc || this.props.posterSrc : this.props.posterSrc
+
     render() {
         const videoHtml = videoTagString({
-            src: this.props.src,
+            src: this.src(),
+            poster: this.poster(),
             muted: true,
             autoPlay: true,
             playsInline: true,
