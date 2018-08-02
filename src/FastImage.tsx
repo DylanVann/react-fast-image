@@ -66,8 +66,7 @@ export interface FastImageVideoBestProps extends FastImageCommonProps {
 }
 
 export type FastImageBestProps = FastImageImageBestProps & FastImageVideoBestProps
-
-export type FastImageProps = Partial<FastImageBestProps>
+export type FastImageProps = Partial<FastImageImageBestProps & FastImageVideoBestProps>
 
 const defaultProps = {
     lazy: true,
@@ -77,21 +76,17 @@ const defaultProps = {
 export class FastImage extends React.PureComponent<FastImageProps> {
     static defaultProps: FastImageProps = defaultProps as FastImageProps
     render() {
-        const {
-            imgAlt,
-            imgSizes,
-            imgSrc,
-            imgSrcSet,
-            imgWebPSrc,
-            imgWebPSrcSet,
-            imgBase64,
-            videoSrc,
-            videoPosterSrc,
-            videoPosterWebPSrc,
-            videoPosterBase64,
-            ...otherProps
-        } = this.props
         if (this.props.imgSrc) {
+            const {
+                imgAlt,
+                imgSizes,
+                imgSrc,
+                imgSrcSet,
+                imgWebPSrc,
+                imgWebPSrcSet,
+                imgBase64,
+                ...otherProps
+            } = this.props
             return (
                 <FastImageImage
                     src={imgSrc as string}
@@ -106,6 +101,13 @@ export class FastImage extends React.PureComponent<FastImageProps> {
             )
         }
         if (this.props.videoSrc) {
+            const {
+                videoSrc,
+                videoPosterSrc,
+                videoPosterWebPSrc,
+                videoPosterBase64,
+                ...otherProps
+            } = this.props
             return (
                 <FastImageVideo
                     src={videoSrc as string}
