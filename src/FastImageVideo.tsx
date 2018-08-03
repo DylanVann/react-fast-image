@@ -87,6 +87,15 @@ export class FastImageVideo extends React.PureComponent<Partial<FastImageVideoPr
         supportsWebP ? this.props.posterWebPSrc || this.props.posterSrc : this.props.posterSrc
 
     render() {
+        const {
+            className,
+            containerInnerClassName,
+            containerOuterClassName,
+            mediaClassName,
+            lazy,
+            height,
+            width,
+        } = this.props
         const videoHtml = videoTagString({
             src: this.src(),
             poster: this.poster(),
@@ -94,22 +103,23 @@ export class FastImageVideo extends React.PureComponent<Partial<FastImageVideoPr
             autoPlay: true,
             playsInline: true,
             loop: true,
-            className: classnames(cssAsset, this.props.mediaClassName),
+            className: classnames(cssAsset, mediaClassName),
         })
-        const html = this.props.lazy ? noscript(videoHtml) : videoHtml
+        const html = lazy ? noscript(videoHtml) : videoHtml
         return (
             <span
+                style={{ width }}
                 className={classnames(
                     cssContainerOuter,
-                    this.props.containerOuterClassName,
-                    this.props.className,
+                    containerOuterClassName,
+                    className,
                 )}
                 ref={this.captureOuterRef}
             >
                 <span
-                    className={classnames(cssContainerInner, this.props.containerInnerClassName)}
-                    style={{ paddingBottom: getPaddingBottom(this.props.width, this.props.height) }}
-                    ref={this.props.lazy ? this.captureInnerRef : undefined}
+                    className={classnames(cssContainerInner, containerInnerClassName)}
+                    style={{ paddingBottom: getPaddingBottom(width, height) }}
+                    ref={lazy ? this.captureInnerRef : undefined}
                     dangerouslySetInnerHTML={{ __html: html }}
                 />
             </span>
