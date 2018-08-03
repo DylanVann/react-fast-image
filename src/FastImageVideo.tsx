@@ -88,6 +88,7 @@ export class FastImageVideo extends React.PureComponent<Partial<FastImageVideoPr
 
     render() {
         const {
+            posterBase64,
             className,
             containerInnerClassName,
             containerOuterClassName,
@@ -109,16 +110,16 @@ export class FastImageVideo extends React.PureComponent<Partial<FastImageVideoPr
         return (
             <span
                 style={{ width }}
-                className={classnames(
-                    cssContainerOuter,
-                    containerOuterClassName,
-                    className,
-                )}
+                className={classnames(cssContainerOuter, containerOuterClassName, className)}
                 ref={this.captureOuterRef}
             >
                 <span
                     className={classnames(cssContainerInner, containerInnerClassName)}
-                    style={{ paddingBottom: getPaddingBottom(width, height) }}
+                    style={{
+                        paddingBottom: getPaddingBottom(width, height),
+                        backgroundSize: 'cover',
+                        backgroundImage: posterBase64 ? `url('${posterBase64}')` : undefined,
+                    }}
                     ref={lazy ? this.captureInnerRef : undefined}
                     dangerouslySetInnerHTML={{ __html: html }}
                 />
