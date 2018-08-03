@@ -3,7 +3,6 @@ import { css } from 'emotion'
 export const cssContainerOuter = css`
     position: relative;
     display: block;
-    width: 100%;
     margin-left: auto;
     margin-right: auto;
 `

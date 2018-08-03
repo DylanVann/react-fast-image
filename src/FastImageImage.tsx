@@ -102,27 +102,39 @@ export class FastImageImage extends React.PureComponent<Partial<FastImageImagePr
     }
 
     render() {
+        const {
+            className,
+            containerInnerClassName,
+            containerOuterClassName,
+            mediaClassName,
+            lazy,
+            alt,
+            sizes,
+            height,
+            width,
+        } = this.props
         const imgHtml = imgTagString({
             src: this.src(),
             srcSet: this.srcSet(),
-            alt: this.props.alt,
-            sizes: this.props.sizes,
-            className: classnames(cssAsset, this.props.mediaClassName),
+            alt,
+            sizes,
+            className: classnames(cssAsset, mediaClassName),
         })
-        const html = this.props.lazy ? noscript(imgHtml) : imgHtml
+        const html = lazy ? noscript(imgHtml) : imgHtml
         return (
             <span
+                style={{ width }}
                 className={classnames(
                     cssContainerOuter,
-                    this.props.containerOuterClassName,
-                    this.props.className,
+                    containerOuterClassName,
+                    className,
                 )}
                 ref={this.captureOuterRef}
             >
                 <span
-                    className={classnames(cssContainerInner, this.props.containerInnerClassName)}
-                    style={{ paddingBottom: getPaddingBottom(this.props.width, this.props.height) }}
-                    ref={this.props.lazy ? this.captureInnerRef : undefined}
+                    className={classnames(cssContainerInner, containerInnerClassName)}
+                    style={{ paddingBottom: getPaddingBottom(width, height) }}
+                    ref={lazy ? this.captureInnerRef : undefined}
                     dangerouslySetInnerHTML={{ __html: html }}
                 />
             </span>
