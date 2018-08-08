@@ -30,6 +30,7 @@ export class FastImageImage extends React.PureComponent<Partial<FastImageImagePr
         if ((window as any).IntersectionObserver) {
             this.intersectionObserver = new IntersectionObserver(this.onIntersection, {
                 rootMargin: props.lazyLoadMargin,
+                threshold: 0,
             })
         }
     }

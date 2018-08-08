@@ -27,6 +27,7 @@ export class FastImageVideo extends React.PureComponent<Partial<FastImageVideoPr
         if ((window as any).IntersectionObserver) {
             this.intersectionObserver = new IntersectionObserver(this.onIntersection, {
                 rootMargin: props.lazyLoadMargin,
+                threshold: 0,
             })
         }
     }
