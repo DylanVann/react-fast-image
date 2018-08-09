@@ -100,8 +100,8 @@ export class FastImageImage extends React.PureComponent<Partial<FastImageImagePr
         media.sizes = sizes
         media.setAttribute('sizes', sizes)
 
-        const className = this.props.mediaClassName || ''
-        media.className = classnames(cssAsset, className)
+        const className = classnames(cssAsset, this.props.mediaClassName)
+        media.className = className
         media.setAttribute('class', className)
 
         this.media = media
