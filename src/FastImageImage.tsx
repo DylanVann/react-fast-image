@@ -87,10 +87,23 @@ export class FastImageImage extends React.PureComponent<Partial<FastImageImagePr
         media.onload = this.onLoad
         // Set props.
         media.src = this.src()
+        media.setAttribute('src', this.src())
+
         media.srcset = this.srcSet()
-        media.alt = this.props.alt || ''
-        media.sizes = this.props.sizes || ''
-        media.className = classnames(cssAsset, this.props.mediaClassName)
+        media.setAttribute('srcset', this.srcSet())
+
+        const alt = this.props.alt || ''
+        media.alt = alt
+        media.setAttribute('alt', alt)
+
+        const sizes = this.props.sizes || ''
+        media.sizes = sizes
+        media.setAttribute('sizes', sizes)
+
+        const className = this.props.mediaClassName || ''
+        media.className = classnames(cssAsset, className)
+        media.setAttribute('class', className)
+
         this.media = media
     }
 
