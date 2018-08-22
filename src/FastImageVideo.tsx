@@ -1,5 +1,5 @@
 import React from 'react'
-import classnames from 'classnames'
+import { cx } from 'emotion'
 import { cssContainerInner, cssContainerOuter, cssAsset } from './styles'
 import { FastImageCommonProps } from './FastImage'
 import { videoTagString } from 'react-video-tag'
@@ -49,10 +49,16 @@ export class FastImageVideo extends React.PureComponent<Partial<FastImageVideoPr
         }
     }
 
+    onNextFrame = () => {
+        if (this.media) {
+            this.media.className = cx(cssAsset, this.props.classNameMedia, this.props.classNameMediaVisible)
+        }
+    }
+
     onVisible = () => {
         if (!this.inner) return
         const media: any = document.createElement('video')
-        media.className = classnames(cssAsset, this.props.mediaClassName)
+        media.className = cx(cssAsset, this.props.classNameMedia)
 
         media.src = this.src()
         media.setAttribute('src', this.src())
@@ -73,6 +79,8 @@ export class FastImageVideo extends React.PureComponent<Partial<FastImageVideoPr
         media.setAttribute('loop', '')
 
         this.inner.appendChild(media)
+
+        setTimeout(this.onNextFrame, 32)
     }
 
     captureInnerRef = (ref: HTMLElement) => (this.inner = ref)
@@ -91,9 +99,8 @@ export class FastImageVideo extends React.PureComponent<Partial<FastImageVideoPr
         const {
             posterBase64,
             className,
-            containerInnerClassName,
-            containerOuterClassName,
-            mediaClassName,
+            classNameContainer,
+            classNameMedia,
             lazy,
             height,
             width,
@@ -105,17 +112,17 @@ export class FastImageVideo extends React.PureComponent<Partial<FastImageVideoPr
             autoPlay: true,
             playsInline: true,
             loop: true,
-            className: classnames(cssAsset, mediaClassName),
+            className: cx(cssAsset, classNameMedia),
         })
         const html = lazy ? noscript(videoHtml) : videoHtml
         return (
             <span
                 style={{ width }}
-                className={classnames(cssContainerOuter, containerOuterClassName, className)}
+                className={cx(cssContainerOuter, className)}
                 ref={this.captureOuterRef}
             >
                 <span
-                    className={classnames(cssContainerInner, containerInnerClassName)}
+                    className={cx(cssContainerInner, classNameContainer)}
                     style={{
                         paddingBottom: getPaddingBottom(width, height),
                         backgroundSize: 'cover',

@@ -3,28 +3,27 @@ import { FastImageImage } from './FastImageImage'
 import { FastImageVideo } from './FastImageVideo'
 
 export interface FastImageCommonProps {
-    className?: string
     /**
-     * Media is sorrounded by two spans for positioning.
+     * Media is surrounded by two spans for positioning.
      * This class will be added to the outer span.
      */
-    containerOuterClassName?: string
+    className?: string
     /**
-     * Media is sorrounded by two spans for positioning.
+     * Media is surrounded by two spans for positioning.
      * This class will be added to the inner span.
      */
-    containerInnerClassName?: string
+    classNameContainer?: string
     /**
      * The css class that will go on the media element (img or video).
      */
-    mediaClassName?: string
+    classNameMedia?: string
     /**
-     * This class is added after the media is shown for one frame.
+     * This class is added after the media is shown and added to the DOM for one frame.
      * It can be used to add css transitions for when the media enters.
      */
-    mediaVisibleClassName?: string
+    classNameMediaVisible?: string
     /**
-     * Wether or not to wait for the image to enter the viewport to load it.
+     * Whether or not to wait for the image to enter the viewport to load it.
      */
     lazy?: boolean
     /**

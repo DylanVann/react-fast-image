@@ -1,5 +1,5 @@
 import React from 'react'
-import classnames from 'classnames'
+import { cx } from 'emotion'
 import { cssContainerInner, cssContainerOuter, cssAsset } from './styles'
 import { FastImageCommonProps } from './FastImage'
 import { getPaddingBottom } from './getPaddingBottom'
@@ -53,8 +53,8 @@ export class FastImageImage extends React.PureComponent<Partial<FastImageImagePr
     }
 
     onNextFrame = () => {
-        if (this.media && this.props.mediaVisibleClassName) {
-            this.media.classList.add(this.props.mediaVisibleClassName)
+        if (this.media) {
+            this.media.className = cx(cssAsset, this.props.classNameMedia, this.props.classNameMediaVisible)
         }
     }
 
@@ -76,9 +76,9 @@ export class FastImageImage extends React.PureComponent<Partial<FastImageImagePr
         }
     }
 
-    src = () => (supportsWebP ? this.props.webPSrc || this.props.src : this.props.src) || ''
+    src = () => supportsWebP ? this.props.webPSrc || this.props.src : this.props.src
     srcSet = () =>
-        (supportsWebP ? this.props.webPSrcSet || this.props.srcSet : this.props.srcSet) || ''
+        supportsWebP ? this.props.webPSrcSet || this.props.srcSet : this.props.srcSet
 
     onVisible = () => {
         const media = document.createElement('img')
@@ -86,24 +86,11 @@ export class FastImageImage extends React.PureComponent<Partial<FastImageImagePr
         // By doing this we can ensure we will minimize frame drops.
         media.onload = this.onLoad
         // Set props.
-        media.src = this.src()
-        media.setAttribute('src', this.src())
-
-        media.srcset = this.srcSet()
-        media.setAttribute('srcset', this.srcSet())
-
-        const alt = this.props.alt || ''
-        media.alt = alt
-        media.setAttribute('alt', alt)
-
-        const sizes = this.props.sizes || ''
-        media.sizes = sizes
-        media.setAttribute('sizes', sizes)
-
-        const className = classnames(cssAsset, this.props.mediaClassName)
-        media.className = className
-        media.setAttribute('class', className)
-
+        media.srcset = this.srcSet() || ''
+        media.src = this.src() || ''
+        media.alt = this.props.alt || ''
+        media.sizes = this.props.sizes || ''
+        media.className = cx(cssAsset, this.props.classNameMedia)
         this.media = media
     }
 
@@ -119,9 +106,8 @@ export class FastImageImage extends React.PureComponent<Partial<FastImageImagePr
         const {
             base64,
             className,
-            containerInnerClassName,
-            containerOuterClassName,
-            mediaClassName,
+            classNameContainer,
+            classNameMedia,
             lazy,
             alt,
             sizes,
@@ -133,17 +119,17 @@ export class FastImageImage extends React.PureComponent<Partial<FastImageImagePr
             srcSet: this.srcSet(),
             alt,
             sizes,
-            className: classnames(cssAsset, mediaClassName),
+            className: cx(cssAsset, classNameMedia),
         })
         const html = lazy ? noscript(imgHtml) : imgHtml
         return (
             <span
                 style={{ width }}
-                className={classnames(cssContainerOuter, containerOuterClassName, className)}
+                className={cx(cssContainerOuter, className)}
                 ref={this.captureOuterRef}
             >
                 <span
-                    className={classnames(cssContainerInner, containerInnerClassName)}
+                    className={cx(cssContainerInner, classNameContainer)}
                     style={{
                         paddingBottom: getPaddingBottom(width, height),
                         backgroundSize: 'cover',
