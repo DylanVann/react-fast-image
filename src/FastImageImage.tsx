@@ -54,7 +54,11 @@ export class FastImageImage extends React.PureComponent<Partial<FastImageImagePr
 
     onNextFrame = () => {
         if (this.media) {
-            this.media.className = cx(cssAsset, this.props.classNameMedia, this.props.classNameMediaVisible)
+            this.media.className = cx(
+                cssAsset,
+                this.props.classNameMedia,
+                this.props.classNameMediaVisible,
+            )
         }
     }
 
@@ -76,20 +80,20 @@ export class FastImageImage extends React.PureComponent<Partial<FastImageImagePr
         }
     }
 
-    src = () => supportsWebP ? this.props.webPSrc || this.props.src : this.props.src
-    srcSet = () =>
-        supportsWebP ? this.props.webPSrcSet || this.props.srcSet : this.props.srcSet
+    src = () => (supportsWebP ? this.props.webPSrc || this.props.src : this.props.src)
+    srcSet = () => (supportsWebP ? this.props.webPSrcSet || this.props.srcSet : this.props.srcSet)
 
     onVisible = () => {
-        const media = document.createElement('img')
+        const media = new Image()
         // We will load the image, then decode it, then add it to the DOM.
         // By doing this we can ensure we will minimize frame drops.
         media.onload = this.onLoad
         // Set props.
+        // Order is important.
+        media.sizes = this.props.sizes || ''
         media.srcset = this.srcSet() || ''
         media.src = this.src() || ''
         media.alt = this.props.alt || ''
-        media.sizes = this.props.sizes || ''
         media.className = cx(cssAsset, this.props.classNameMedia)
         this.media = media
     }

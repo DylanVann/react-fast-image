@@ -51,7 +51,11 @@ export class FastImageVideo extends React.PureComponent<Partial<FastImageVideoPr
 
     onNextFrame = () => {
         if (this.media) {
-            this.media.className = cx(cssAsset, this.props.classNameMedia, this.props.classNameMediaVisible)
+            this.media.className = cx(
+                cssAsset,
+                this.props.classNameMedia,
+                this.props.classNameMediaVisible,
+            )
         }
     }
 
