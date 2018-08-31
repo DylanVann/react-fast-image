@@ -10,16 +10,28 @@ export interface FastImageCommonProps {
     className?: string
     /**
      * Media is surrounded by two spans for positioning.
+     * This class will be added to the outer span.
+     * This class will be added when the image is visible and added to the DOM.
+     */
+    classNameVisible?: string
+    /**
+     * Media is surrounded by two spans for positioning.
      * This class will be added to the inner span.
      */
     classNameContainer?: string
+    /**
+     * Media is surrounded by two spans for positioning.
+     * This class will be added to the inner span.
+     * This class will be added when the image is visible and added to the DOM.
+     */
+    classNameContainerVisible?: string
     /**
      * The css class that will go on the media element (img or video).
      */
     classNameMedia?: string
     /**
-     * This class is added after the media is shown and added to the DOM for one frame.
-     * It can be used to add css transitions for when the media enters.
+     * The css class that will go on the media element (img or video).
+     * This class will be added when the image is visible and added to the DOM.
      */
     classNameMediaVisible?: string
     /**

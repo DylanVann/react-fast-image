@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { PureComponent } from 'react'
 import { cx } from 'emotion'
 import { cssContainerInner, cssContainerOuter, cssAsset } from './styles'
 import { FastImageCommonProps } from './FastImage'
@@ -17,7 +17,7 @@ export interface FastImageImageProps extends FastImageCommonProps {
     sizes: string
 }
 
-export class FastImageImage extends React.PureComponent<Partial<FastImageImageProps>> {
+export class FastImageImage extends PureComponent<Partial<FastImageImageProps>> {
     media?: HTMLImageElement
     inner?: HTMLElement
     outer?: HTMLElement
@@ -53,11 +53,21 @@ export class FastImageImage extends React.PureComponent<Partial<FastImageImagePr
     }
 
     onNextFrame = () => {
-        if (this.media) {
+        if (this.media && this.outer && this.inner) {
             this.media.className = cx(
                 cssAsset,
                 this.props.classNameMedia,
                 this.props.classNameMediaVisible,
+            )
+            this.outer.className = cx(
+                cssContainerOuter,
+                this.props.className,
+                this.props.classNameVisible,
+            )
+            this.inner.className = cx(
+                cssContainerInner,
+                this.props.classNameContainer,
+                this.props.classNameContainerVisible,
             )
         }
     }
